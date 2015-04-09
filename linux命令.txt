@@ -1,0 +1,172 @@
+﻿cat /proc/partitions
+sudo mount -t ntfs-3g   /dev/sdb1 /home/video
+sudo mount -t ntfs-3g   /dev/sdb5 /home/cg
+sudo mount -t ntfs-3g -o umask=000,fmask=000 /dev/sda5 /home/soft
+sudo mount -t cifs -o username=ly,password=xxl442 //192.168.1.100/pishare  /home/share
+sudo mount -t cifs -o username=ly,password=xxl442 //192.168.1.100/ydyp  /home/share
+sudo chmod 755
+sudo dpkg-reconfigure dash
+
+sudo su
+wget --no-check-certificate https://api.sinas3.com/v1/SAE_lnmp/soft/lnmp1.1-full.tar.gz
+samba
+vi /etc/samba/smb.conf 
+du -ah  --max-depth=1
+df -h
+
+alter table tb_active add constraint FK_ID foreign key(user_id) REFERENCES tb_user(id)
+alter table works  add foreign key(AID) REFERENCES authors(ID);
+alter table works add constraint FK_AID foreign key(AID) REFERENCES authors(ID);
+alter table works add constraint FK_AID foreign key(AID) REFERENCES authors(ID);
+alter table works add constraint FK_RID foreign key(RID) REFERENCES roots(ID);
+alter table works add constraint FK_SID foreign key(SID) REFERENCES status(ID);
+alter table works drop constraint  works_ibfk_1;
+
+ CREATE TABLE `works` (
+  `ID` bigint(4) NOT NULL,
+  `NAME` varchar(256) NOT NULL,
+  `FILE_NAME` varchar(256) NOT NULL,
+  `DESC.` varchar(256) NOT NULL,
+  `KEYWORD` varchar(256) NOT NULL,
+  `AID` bigint(4) NOT NULL,
+  `RID` bigint(4) NOT NULL,
+  `SID` bigint(4) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='作品列表';
+
+ CREATE TABLE `torrents` (
+  `ID` bigint(4) NOT NULL AUTO_INCREMENT,
+  `KEYWORD` varchar(256) NOT NULL,
+  `URL` char(255) NOT NULL,
+  `STATUS` bigint(4) NOT NULL,
+  `SETUP_TIME` timestamp NOT NULL default now(),
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY (`URL`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='种子列表';
+
+
+
+LOAD DATA LOCAL INFILE '/home/share/mysql_db/status.txt' INTO TABLE home.status 
+FIELDS TERMINATED BY ','  
+LINES TERMINATED BY '\n'
+
+sed -e 1,2\a\323 
+
+ sed -e  s/,/\&32/g status.txt
+ sed -r  s#\(.\)-\(.\)#\\2#  works.txt
+  ls |sed -r -e '/\./d' -e '/bmp|Jpg|JPG/d' -e '/\[(.*)\].*\[(.*)\]/d' -e 's/\[(.*)\]/####/g'
+
+rename -n 's/([a-zA-Z]{3,4}-*[0-9]{3,})/#$1#/' *
+【淫满魔女】SCR089姉のボディークリームに媚薬
+デモニオン ～魔王の地下要塞～
+
+ rename -n 's/^\w*([a-zA-Z]{4,}-*[0-9]{3,4})\w*.(\w*)$/$1.$2/' *
+ rename  's/girlcelly@//' *
+  rename  's/ev|EV//' *
+ rename  's/bmp|jpg|png/###/' *
+ rename  's/([a-z])/_$1/' *
+  rename -n 's/([0-9])/$1_/' *
+  rename -n 's/^([a-z])([0-9]+)([a-z])/$1_$2_$3/' *
+ rename  'y/a-z/0-9/' *
+ 
+ 
+  rename  's/###/bmp/' *
+    rename  's/###/jpg/' *
+	rename 's/###/png/' *
+ls | awk '/.(jpg|png|bmp)/{count++;var =sprintf("mv %s %05d.jpg",$1,count);print var;}'
+ls | awk 'BEGIN{print "game start"}/.(jpg|png|bmp)/{print}END{print "game over"}'
+
+{cmd =sprintf("test -d %s && cd %s && ls|awk -f /home/awk.txt",$1,$1);system(cmd);}
+rename -n 's/\\(|\\)|\\[|\\]|\\s/_/g' *
+
+ls |awk -f rename.awk -v _dir_=$(pwd) -v _level_=0 
+ls |awk -f classify.awk -v _dir_=$(pwd) -v _level_=0 -v _t_dir_=$(pwd)/temp
+
+(同人誌)[G's studio]DOKIDOKI交际チェッカー[C]
+(COMIC1☆8) [真面目屋 (isao)] モモ☆もも (ワンピース) [Korean] [Team Mystic]
+
+wget https://dl.dropboxusercontent.com/u/80256631/8188eu-20140908.tar.gz
+sudo rpi-update
+load data infile '/home/1.txt' into table works FIELDS TERMINATED BY ',' IGNORE 1 LINES
+select * from works where FILE_NAME regexp "wmv";
+
+ CREATE TABLE `status` (
+  `ID` bigint(4) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(20) NOT NULL,
+  `DESC.` varchar(256) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE(`NAME`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT='状态列表'
+
+
+ CREATE TABLE `torrents` (
+  `ID` bigint(4) NOT NULL AUTO_INCREMENT,
+  `KEYWORD` varchar(256) NOT NULL,
+  `URL` char(255) NOT NULL,
+  `COUNT` bigint(4) NOT NULL,
+  `STATUS` bigint(4) NOT NULL,
+  `SETUP_TIME` timestamp NOT NULL default now(), 
+  PRIMARY KEY (`ID`),
+  UNIQUE(`URL`),
+    CONSTRAINT `FK_SID` FOREIGN KEY (`STATUS`) REFERENCES `status` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT='种子列表'
+
+insert into groups values("","guest","游客"),("","user","注册用户"),("","admin","管理员");
+ CREATE TABLE `users` (
+  `ID` bigint(4) ZEROFILL NOT NULL AUTO_INCREMENT ,
+  `NAME` varchar(20) NOT NULL,
+  `DESC.` varchar(256) NOT NULL,
+  `KEYWORD` varchar(256) NOT NULL,
+  `PASSWORD` varchar(22) NOT NULL,
+  `QQ` varchar(11) NOT NULL,
+  `EMAIL` varchar(32) NOT NULL,
+  `GID` bigint(4) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE(`NAME`),
+  UNIQUE(`EMAIL`),
+  UNIQUE(`QQ`),
+  KEY `FK_GID` (`GID`),
+  CONSTRAINT `FK_GID` FOREIGN KEY (`GID`) REFERENCES `groups` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT  CHARSET=utf8 COMMENT='用户列表';
+
+insert into users values("","pi","管理员","","123456","123456","123456",4);
+//nfts文件恢复
+sudo ntfsundelete  /dev/sdb5 -f -t 3d 
+sudo ntfsundelete /dev/sdb5 -f -u -i 2012  -d  /home/video
+
+//下载工具
+
+//magnet
+//版本控制
+sudo apt-get install subversion
+
+//rtorrent 
+wget http://libtorrent.rakshasa.no/downloads/libtorrent-0.13.4.tar.gz
+wget http://libtorrent.rakshasa.no/downloads/rtorrent-0.9.4.tar.gz
+tar xzfv libtorrent-0.13.4.tar.gz
+tar xzfv rtorrent-0.9.4.tar.gz
+cd libtorrent-0.13.4
+./configure
+make
+make install
+cd ../rtorrent-0.9.4/
+./configure --with-xmlrpc-c=/usr/local/bin/xmlrpc-c-config
+make
+make install
+
+apt-get install linux-source
+rpi-update
+git init
+git fetch git://github.com/raspberrypi/linux.git rpi-3.18.y:refs/remotes/origin/rpi-3.18.y
+git checkout rpi-3.18.y
+2015/04/09
+
+内核树编译命令
+make mrproper
+zcat /proc/config.gz > .config
+
+ make oldconfig 
+ make
+ make bzImage
+ make modules
+ make modules_install
