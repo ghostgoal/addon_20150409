@@ -1,0 +1,43 @@
+{
+ "name": "番号搜索器", 
+   "version": "2.0", 
+   "manifest_version":2,
+   "description": "美女你懂得", 
+   "browser_action": { 
+      "default_icon": "logo.png", 
+      "default_popup": "popup.html" 
+   },
+     "chrome_url_overrides": {
+    "newtab": "blank.html"
+  }
+  ,
+	"background": { "scripts": ["/js/bk.js"] },
+	"permissions": ["contextMenus","tabs","http://localhost/*"],
+	"icons": {"16": "context.png"},
+   "options_page": "home.html",
+    "omnibox": { "keyword" : "av" },
+	
+	"content_scripts": [
+    {
+      "matches": ["http://sukebei.nyaa.se/*"],
+      "js": ["/js/jquery-1.11.0.min.js","/js/hack.js"]
+    }
+	,
+	{
+      "matches": ["http://www.storetorrent.net/*"],
+      "js": ["/js/jquery-1.11.0.min.js","/js/hack2.js"]
+    }
+	,
+	{
+      "matches": ["http://*/*"],
+      "js": ["/js/jquery-1.11.0.min.js","/js/hack_ex.js"]
+    }
+	],
+	  "chrome_url_overrides" : {
+    "history": "bg.html"
+  }
+ 
+	
+	
+	
+   }

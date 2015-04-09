@@ -1,0 +1,11 @@
+.ss_footer {background-color:gray;padding:10px;}
+.ss{border:solid gray 1px;border-radius:4px;}
+.ss h1{margin-top:0;background-color:gray;border-top-left-radius:2px;border-top-right-radius:2px;}
+.ss_content{padding-left:20px;padding-right:20px;}
+.ss_site ,.ss_add_site {padding:4px;border-radius:4px;position:relative;background-color:gray;}
+.ss_site a{float:right;margin-right:10px;cursor:pointer;}
+.ss_add_site input{width:100%;}
+
+.ss_add_site a{position:absolute;right:14px;top:7px;cursor:pointer;}
+
+.ss_option  {background-color:gray;padding:4px;border-radius:4px;max-width:200px;}

@@ -1,0 +1,79 @@
+﻿<html>
+
+<head>
+
+<script src='jquery-1.11.0.min.js' ></script>
+
+<script src='jquery.zclip.min.js' ></script>
+
+<style type="text/css">
+
+
+.nav {
+
+float:left;
+background-color:#F33;
+}
+.nav li{
+
+
+
+
+margin:auto;
+}
+.d{
+display:block;
+
+margin:auto;
+width:150px;
+text-align:center;
+text-decoration:none;
+  font:12px/20px arial,sans-serif;
+ 
+}
+
+.content{
+display:none;
+
+
+}
+
+.expand{
+height:300px;
+text-align:left;
+
+}
+
+</style>
+ 
+</head>
+
+<body>
+<a href = "http://localhost/home/search.html" target="_blank" class='d'>首页</a>
+
+<hr>
+<input type='text' class ='d' id='fh'></input>
+<hr>
+
+
+<button id ='search' class='d'>搜索</button>
+<hr>
+
+
+<textarea id='magnet' class='content'></textarea>
+<hr>
+<button class='d' id='paste' disabled='true'>粘贴</button>
+
+<!-- <script type="text/javascript">
+
+
+$("#search").zclip({path:"ZeroClipboard.swf",copy:'12580'});
+
+</script> -->
+
+
+ <script src='popup.js' ></script>
+
+</body>
+
+</html>

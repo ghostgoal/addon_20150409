@@ -1,0 +1,5 @@
+1.扩展内部不能使用inline javascript,只能使用内部.js文件
+2.扩展内部默认不能引用外部.js文件.(如需要必须在manifest.json修改"content_security_policy")
+3.jquery 
+	根据官方的建议：具有 true 和 false 两个属性的属性，如 checked, selected 或者 disabled 使用prop()，其他的使用 attr() 
+4.zclip 不要使用ALERT等函数
