@@ -53,7 +53,7 @@
 	}
 	context_menu = {
 		props : {
-			title : "ËÑË÷ %s",
+			title : "æœç´¢ %s",
 			contexts : ["all"],
 			documentUrlPatterns : ["*://*/*"],
 			targetUrlPatterns : ["src:*"],
