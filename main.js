@@ -8,12 +8,13 @@
 	res = [];
 	def_settings = {
 		server_info : {
+			username : 'guest',
+			password : '123456',
 			addr : '192.168.1.128',
 			download : '/download',
 			upload : '/upload',
 		},
-		username : 'guest',
-		password : '123456',
+
 		sites : [{
 				max : 3,
 				url : 'http://sukebei.nyaa.se/?page=search&cats=0_0&filter=0&term=',
@@ -61,7 +62,7 @@
 				if (info.selectionText !== undefined) {
 					var kw = info.selectionText;
 					kw = kw.replace(/-/, " ");
-					keywords[] = kw;
+					keywords.push(kw);
 					for (var site in settings.sites) {
 						if (site.enable) {
 							chrome.tabs.create({
@@ -90,6 +91,20 @@
 		}
 	}
 	var handlers = {
+		sys : {
+			ops : {
+				dump : function (data, cb) {
+					cb({
+						settings : settings,
+						keywords : keywords,
+						res : res
+					});
+				}
+				debug : function (data, cb) {
+					alert("Hello World!");
+				}
+			}
+		}
 		options : {
 			ops : {
 				save : function (data, cb) {
