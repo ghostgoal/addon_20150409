@@ -2,18 +2,18 @@ $(function () {
 	var url = window.location.href,
 	ops;
 	ops = {
-		target : 'cs',
+		id : 'cs',
 		handler : {
 			save : function (data, cb) {
 				chrome.extension.sendRequest({
-					target : ops.target,
+					id : ops.id,
 					act : 'save',
 					data : data
 				}, cb);
 			},
 			load : function (data, cb) {
 				chrome.extension.sendRequest({
-					target : ops.target,
+					id : ops.id,
 					act : 'load',
 					data : data
 				}, cb);

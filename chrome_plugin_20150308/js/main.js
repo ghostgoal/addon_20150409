@@ -6,6 +6,15 @@
 	helper,
 	handlers
 	res = [];
+	var DEBUG = {
+		TAG : 'main.js',
+		enable : true,
+		LOG : function (log) {
+			if (this.enable) {
+				alert(log);
+			}
+		}
+	}
 	def_settings = {
 		server_info : {
 			username : 'guest',
@@ -60,21 +69,14 @@
 			onclick : function (info, t) {
 				if (info.selectionText !== undefined) {
 					var kw = info.selectionText;
-					kw = kw.replace(/-/, " ");
-					keywords.push(kw);
-					for (var i in settings.sites) {
-						var site = settings.sites[i];
-						if (site.enable) {
-							chrome.tabs.create({
-								url : site.url + kw
-							});
-						}
-					}
+					helper.invoke('sys', 'grab', {
+						kw : kw
+					});
 				}
 			}
 		},
 		callback : function () {
-			alert("Succeed to install.");
+			DEBUG.LOG("Succeed to install.");
 		},
 		id : 0,
 		init : function () {
@@ -85,12 +87,10 @@
 		sys : {
 			ops : {
 				init : function (data, cb) {
-
 					helper.invoke('options', 'load', null, function (data) {
 						settings = data;
 					});
 					context_menu.init();
-
 					chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
 						var target = request.target,
 						act = request.act,
@@ -107,7 +107,25 @@
 					});
 				},
 				debug : function (data, cb) {
-					alert("Hello World!");
+					for (var i in DEBUG) {
+						if (typeof data[i] !== 'undefined') {
+							DEBUG[i] = data[i];
+						}
+					}
+					cb();
+				},
+				grab : function (data, cb) {
+					var kw = data.kw;
+					kw = kw.replace(/-/, " ");
+					keywords.push(kw);
+					for (var i in settings.sites) {
+						var site = settings.sites[i];
+						if (site.enable) {
+							chrome.tabs.create({
+								url : site.url + kw
+							});
+						}
+					}
 				}
 			}
 		},
@@ -117,7 +135,7 @@
 					if (window.localStorage) {
 						localStorage.config = JSON.stringify(data);
 					} else {
-						alert("Failed to save config!");
+						DEBUG.LOG("Failed to save config!");
 					}
 				},
 				load : function (data, cb) {
@@ -140,7 +158,6 @@
 					cb(settings.sites);
 				},
 				save : function (data, cb) {
-					/* res.push(data.res); */
 					res.push(data);
 					cb();
 				}
@@ -183,8 +200,7 @@
 			return this.op.toString.call(obj) === '[object Function]';
 		},
 		invoke : function (target, act, data, cb) {
-
-			alert(target + "_" + act);
+			DEBUG.LOG(target + '_' + act);
 			var fn = handlers[target] ? handlers[target].ops[act] : {};
 			if (this.isFunction(fn)) {
 				fn(data, cb);
