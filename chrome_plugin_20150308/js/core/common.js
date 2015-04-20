@@ -231,7 +231,6 @@ var UI_RESOURCE_MGR = {
 			} else {}
 			this.pjq.append(this.jq);
 		}
-		this.init();
 		this.nextID = function () {
 			var fmt = '{0}_{1}';
 			this.next_id += 1;
@@ -282,12 +281,13 @@ var UI_RESOURCE_MGR = {
 		};
 		this.reset = function (data) {
 			this.data = data;
-			this.dirty=false;
+			this.dirty = false;
 			this.next = [];
 			var theNew = this.create(this.id, this.data);
 			var theOld = this.jq;
 			theOld.after(theNew);
 			theOld.remove();
+			this.jq = theNew;
 			if (UI_RESOURCE_MGR.UI[this.pid]) {
 				UI_RESOURCE_MGR.UI[this.pid].dirty = true;
 			}
@@ -299,20 +299,16 @@ var UI_RESOURCE_MGR = {
 			UI_RESOURCE_MGR.UI[this.id] = undefined;
 			this.jq.remove();
 		};
+		this.init();
 	},
 	INIT_MENU : function (THIS, opts) {
 		this.__INIT_MENU.call(THIS, opts);
 	},
 	__INIT_MENU : function (opts) { ;
 		$(this).css('position', 'relative').css('border', '1px black solid').css('border-radius', '4px').css('borderTopWidth', '32px').css('padding', '10px');
-		var menu = $('<div></div>').attr('mid', opts.mid).attr('uid', opts.uid).css('position', 'absolute').css('right', '6px').css('top', '-26px').css('border-radius', '4px').css('backgroundColor', 'yellow');
-		var edit = $('<a>?</a>').css('marginLeft', '10px');
-		var close = $('<a>X</a>').css('marginLeft', '10px');
-		var add = $('<a>+</>').css('marginLeft', '10px');
+		var menu = $('<div></div>').attr('mid', opts.mid).attr('uid', opts.uid).css('position', 'absolute').css('right', '6px').css('top', '-26px').css('border-radius', '4px');
+		var edit = $('<a></a>').css('marginRight', '6px').append("<span class=\"glyphicon glyphicon-edit\"></span>");
 		edit.appendTo(menu);
-		close.appendTo(menu);
-		add.appendTo(menu);
-		menu.appendTo(this);
 		edit.click(function () {
 			var uid = $(this).parent().attr('uid');
 			var mid = $(this).parent().attr('mid');
@@ -323,26 +319,34 @@ var UI_RESOURCE_MGR = {
 				alert(ui.id + JSON.stringify(ui.data));
 			}
 		});
-		close.click(function () {
-			var uid = $(this).parent().attr('uid');
-			if (confirm('确定删除？')) {
-				var ui = UI_RESOURCE_MGR.UI[uid];
-				ui.close();
-			}
-		});
-		add.click(function () {
-			var uid = $(this).parent().attr('uid');
-			var mid = $(this).parent().attr('mid');
-			var modal = UI_RESOURCE_MGR.MODAL[mid];
-			if (modal) {
-				var ui = UI_RESOURCE_MGR.UI[uid];
-				var pui = UI_RESOURCE_MGR.UI[ui.pid];
-				var id = pui ? pui.nextID() : ui.id + 'to' + 1;
-				var data = {};
-				var nui = UI_RESOURCE_MGR.INIT_UI(ui.pid, ui.pjq, id, ui.name, data, ui.create);
-				modal.load(nui);
-			}
-		});
+		if (opts['on']) {
+			var close = $('<a></a>').css('marginRight', '6px').append("<span class=\"glyphicon glyphicon-trash\"></span>");
+			close.appendTo(menu);
+			close.click(function () {
+				var uid = $(this).parent().attr('uid');
+				if (confirm('确定删除？')) {
+					var ui = UI_RESOURCE_MGR.UI[uid];
+					ui.close();
+				}
+			});
+			var add = $('<a></>').css('marginRight', '6px').append("<span class=\"glyphicon glyphicon-plus-sign\"></span>");
+			add.appendTo(menu);
+			add.click(function () {
+				var uid = $(this).parent().attr('uid');
+				var mid = $(this).parent().attr('mid');
+				var modal = UI_RESOURCE_MGR.MODAL[mid];
+				if (modal) {
+					var ui = UI_RESOURCE_MGR.UI[uid];
+					var pui = UI_RESOURCE_MGR.UI[ui.pid];
+					var id = pui ? pui.nextID() : ui.id + 'to' + 1;
+					alert(id);
+					var data = {};
+					var nui = UI_RESOURCE_MGR.INIT_UI(ui.pid, ui.pjq, id, ui.name, data, ui.create);
+					modal.load(nui);
+				}
+			});
+		}
+		menu.appendTo(this);
 	},
 	INIT_MODAL : function (opts) {
 		this.MODAL[opts.id] = new this.modal_func(opts);

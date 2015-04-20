@@ -1,26 +1,27 @@
 var RESOURCE_ID = ['settings', 'res'];
 var RESOURCE_DEFAULT = [{
-		server_info : {
+		server_info : [{
 			username : 'guest',
 			password : '123456',
 			addr : '192.168.1.128',
 			download : '/download',
 			upload : '/upload',
-		},
+		}],
 		sites : [{
 				max : 3,
 				url : 'http://sukebei.nyaa.se/?page=search&cats=0_0&filter=0&term=',
 				patterns : [{
 						selector : '.tlistrow .tlistname',
-						name : 'name',
-						type : 'props'
+						key : 'name',
+						value : 'props:'
 					}, {
 						selector : '.tlistrow .tlistdownload',
-						name : 'download',
-						attr : 'href'
+						key : 'download',
+						value : 'attr:href'
 					}, {
 						selector : '.tlistrow .tlistsize',
-						name : 'size',
+						key : 'size',
+						value:'text'
 					}
 				],
 				desc : '',
@@ -30,13 +31,17 @@ var RESOURCE_DEFAULT = [{
 				url : 'http://www.btsts.com/s/',
 				patterns : [{
 						selector : '.i_info',
-						name : 'name',
+						key : 'name',
+						value:'text'
+						
 					}, {
 						selector : '.j_size a',
-						name : 'download',
+						key : 'download',
+						value:'attr:href'
 					}, {
 						selector : '.j_size',
-						name : 'size',
+						key : 'size',
+						value:'text'
 					}
 				],
 				desc : '',
@@ -69,6 +74,12 @@ var MODULE_MAPS = [{
 		id : 'op',
 		events : ['save', 'load', 'reset'],
 		desc : '选项页',
+		enable : true
+	},{
+		name : 'content script',
+		id : 'cs',
+		events : ['save', 'load', 'reset'],
+		desc : '内容脚本',
 		enable : true
 	}
 ];
