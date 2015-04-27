@@ -48,7 +48,7 @@ var RESOURCE_DEFAULT = [{
 				enable : true
 			}
 		]
-	}, {}
+	}, {data:[]}
 
 ];
 var EVENTMAPS = [{
@@ -80,6 +80,20 @@ var MODULE_MAPS = [{
 		id : 'cs',
 		events : ['save', 'load', 'reset'],
 		desc : '内容脚本',
+		enable : true
+	},
+	{
+		name : 'popup page',
+		id : 'pp',
+		events : ['save', 'load', 'download'],
+		desc : '弹出页',
+		enable : true
+	},
+	{
+		name : 'context menu',
+		id : 'cm',
+		events : ['ready', 'load', 'download'],
+		desc : '弹出页',
 		enable : true
 	}
 ];

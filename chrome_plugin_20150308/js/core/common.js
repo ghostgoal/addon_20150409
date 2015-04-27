@@ -207,7 +207,7 @@ var UI_RESOURCE_MGR = {
 	menu_func : function () {},
 	MODAL : {},
 	UI : {},
-	INIT_UI : function (pid, pjq, id, name, data, create) {
+	INIT_UI : function (pid, pjq, id, name, data, create, handlers) {
 		this.UI[id] = {
 			id : id,
 			dirty : false,
@@ -218,14 +218,18 @@ var UI_RESOURCE_MGR = {
 			name : name,
 			next_id : 0,
 			next : [],
+			handlers : []
 		};
+		if (handlers) {
+			this.INIT_HANDLER(id, handlers);
+		}
 		this.__INIT_UI.call(this.UI[id]);
 		return this.UI[id];
 	},
 	__INIT_UI : function () {
 		this.init = function () {
 			this.jq = this.create(this.id, this.data);
-			if (UI_RESOURCE_MGR.UI[this.pid]) {
+			if (this.id  && UI_RESOURCE_MGR.UI[this.pid]) {
 				UI_RESOURCE_MGR.UI[this.pid].next = UI_RESOURCE_MGR.UI[this.pid].next || [];
 				UI_RESOURCE_MGR.UI[this.pid].next.push(this.id);
 			} else {}
@@ -317,6 +321,8 @@ var UI_RESOURCE_MGR = {
 				var ui = UI_RESOURCE_MGR.UI[uid];
 				modal.load(ui);
 				alert(ui.id + JSON.stringify(ui.data));
+			} else {
+				alert('no modal' + mid);
 			}
 		});
 		if (opts['on']) {
@@ -343,6 +349,8 @@ var UI_RESOURCE_MGR = {
 					var data = {};
 					var nui = UI_RESOURCE_MGR.INIT_UI(ui.pid, ui.pjq, id, ui.name, data, ui.create);
 					modal.load(nui);
+				} else {
+					alert('no modal' + mid);
 				}
 			});
 		}
@@ -350,5 +358,16 @@ var UI_RESOURCE_MGR = {
 	},
 	INIT_MODAL : function (opts) {
 		this.MODAL[opts.id] = new this.modal_func(opts);
+	},
+	INIT_HANDLER : function (id, handlers) {
+		if (this.UI[id] && isObject(handlers))
+			this.__INIT_HANDLER.call(this.UI[id], handlers);
+	},
+	__INIT_HANDLER : function (handlers) {
+		for (var i in handlers) {
+			if (isFunction(handlers[i])) {
+				this.handlers[i] = handlers[i];
+			}
+		}
 	}
 };

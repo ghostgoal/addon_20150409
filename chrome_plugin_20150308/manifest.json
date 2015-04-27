@@ -20,7 +20,7 @@
 	"content_scripts": [
 	{
       "matches": ["http://*/*"],
-      "js": ["/js/lib/jquery-1.11.0.min.js","/js/cs/hack_ex.js"]
+      "js": ["/js/lib/jquery-1.11.0.min.js","/js/core/common.js","/js/config.js","/js/mod/cs.js"]
     }
 	],
 	  "chrome_url_overrides" : {
