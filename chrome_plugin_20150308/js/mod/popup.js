@@ -60,6 +60,8 @@ $(function () {
 				return a;
 			}, function (id, data) {
 				var a = $('<div></div>').attr('id', id).css('border', '1px  solid').css('border-radius', '4px').css('padding', '10px').css('borderTopWidth', '20px').css('position', 'relative').addClass("tab-pane fade");
+				
+				UI_RESOURCE_MGR.INIT_MENU(a,{uid:id,on:true});
 				var max = data['max'] || 0;
 				var len = data['len'] || 0;
 				var sum = data['sum'] || 0;
@@ -104,13 +106,14 @@ $(function () {
 		init : function () {
 			var t = MODULE_MAPS[2];
 			MODULE.INIT(this, t.id, t.name, t.desc, t.events);
-			ui.init('content', 'res', 'res', {}, handlers);
+			ui.init('history', 'history_res', 'res', {}, handlers);
 			this.load_res();
 		},
 		load_res : function () {
 			this.fire('load', '', this.on_load_res);
 		},
 		on_load_res : function (res) {
+			/* alert(res); */
 			var data = {
 				tag : 'res',
 				res : res['data']
@@ -132,6 +135,7 @@ $(function () {
 		},
 		load : function () {
 			mod.load_res();
+			
 		},
 		download : function () {
 			alert('download');

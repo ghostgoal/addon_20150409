@@ -90,10 +90,10 @@ var MODULE_MAPS = [{
 		enable : true
 	},
 	{
-		name : 'context menu',
-		id : 'cm',
-		events : ['ready', 'load', 'download'],
-		desc : '弹出页',
+		name : 'server interaction',
+		id : 'si',
+		events : ['load'],
+		desc : '服务器交互',
 		enable : true
 	}
 ];

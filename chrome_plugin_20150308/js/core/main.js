@@ -13,7 +13,11 @@ var system = {
 		EVENTHANDLER.INIT(this, 'cs', 'load', this.on_cs_sites_load);
 		EVENTHANDLER.INIT(this, 'pp', 'load', this.on_pp_res_load);
 		EVENTHANDLER.INIT(this, 'pp', 'save', this.on_pp_res_save);
+		EVENTHANDLER.INIT(this, 'si', 'load', this.on_si_load);
 		EVENTPUMP.LOOP();
+	},
+	on_si_load : function (data, cb) {
+		cb(this.settings.cur);
 	},
 	on_pp_res_load : function (data, cb) {
 		cb(this.res.cur);
@@ -24,8 +28,6 @@ var system = {
 		cb(this.res.cur);
 	},
 	on_cs_res_save : function (data, cb) {
-		/* alert(JSON.stringify(data));
-		alert(JSON.stringify(this.res)); */
 		this.res.cur['data'] = this.res.cur['data'] ? this.res.cur['data'] : [];
 		this.res.cur['data'].push(data);
 		this.res.save(this.res.cur);
@@ -68,11 +70,9 @@ $(function () {
 			this.mid = chrome.contextMenus.create(this.cp, this.oncreate);
 		},
 		onclick : function (info, tab) {
-			alert(JSON.stringify(info));
 			var keyword = info.selectionText || false;
 			keyword = keyword.replace(/-/g, ' ');
 			if (keyword) {
-				alert(JSON.stringify(system.settings.cur.sites));
 				var sites = system.settings.cur.sites;
 				for (var i = 0; i < sites.length; i++) {
 					var site = sites[i];
