@@ -18,8 +18,6 @@ $(function () {
 		},
 		create : function (id, data) {
 			var a = $('<div></div>').attr('id', id);
-
-			//工具栏
 			var b1 = $('<div></div>').addClass('btn-group');
 			if (this.handlers) {
 				for (var i in this.handlers) {
@@ -33,28 +31,25 @@ $(function () {
 			b1.appendTo(a);
 			var homepage = data;
 			if (homepage.ready) {
-				//内容显示
 				var b2 = $('<div></div>').css('padding', '10px');
-				for (var i = homepage.get_start_page(); i < homepage.get_end_page(); i++) {
+				for (var i = homepage.get_page_start(); i < homepage.get_page_end(); i++) {
 					var url = homepage.data[i];
 					var c = $('<a></a>').text(url['FILENAME']).attr('href', 'http://192.168.1.128' + url['NAME']).attr('target', '_blank').attr('res_id', url['ID']).attr('title', url['NAME']).css('display', 'block').css('border', '1px blue solid').css('marginBottom', '10px').css('border-radius', '4px').css('padding', '6px 12px 6px 12px').css('textDecoration', 'none');
 					c.appendTo(b2);
 				}
 				b2.appendTo(a);
-
-				//内容索引
 				var b3 = $('<ul class="pagination pagination-sm"></ul>').css('padding', '10px');
 				var c1 = $('<li><a>&laquo;</a></li>').appendTo(b3).find('a').click(function () {
 						homepage.prev();
 					});
-				for (var j = homepage.page_start; j < Math.ceil(homepage.page_end / homepage.page_size); j++) {
+				for (var j = 0; j < homepage.pages; j++) {
 					var c2 = $('<li></li>');
 					var d = $('<a></a>').text(j + 1).attr('page', j).click(function () {
 							homepage.select(parseInt($(this).attr('page')));
 						});
 					d.appendTo(c2);
 					c2.appendTo(b3);
-					if (j == homepage.page_index) {
+					if (j == homepage.page) {
 						c2.addClass('active');
 					}
 				}
@@ -112,11 +107,12 @@ $(function () {
 				alert(JSON.stringify(XMLHttpRequest));
 			}
 		},
-		index : function () {
+		index : function (page) {
 			if (this.ready) {
 				var url = this.config.addr;
 				var data = {
-					act : 'index'
+					act : 'index',
+					page : page
 				}
 				$.ajax({
 					type : 'POST',
@@ -130,50 +126,62 @@ $(function () {
 		},
 		homepage : {
 			ready : false,
+			pages : 0,
 			data : {},
-			page_start : 0,
-			page_end : 0,
+			page : 0,
 			page_size : 10,
-			page_index : 0,
-			select : function (index) {
-				if (this.ready) {
-					this.page_index = index;
-					ui.reset(this);
+			act : 'index',
+			do_handle : function (page) {
+				switch (this.act) {
+				case 'index':
+					mod.index(page);
+					break;
+				case 'search':
+					mod.search(page);
+					break;
 				}
 			},
 			next : function () {
-				if (this.ready) {
-					this.page_index += 1;
-					if ((this.page_index * this.page_size) > this.page_end)
-						this.page_index = 0;
-					ui.reset(this);
-				}
+				var page = (this.page + 1 < this.pages) ? (this.page + 1) : 0;
+
+				this.do_handle(page);
 			},
 			prev : function () {
-				if (this.ready) {
-					this.page_index -= 1;
-					if (this.page_index < 0)
-						this.page_index = Math.floor(this.page_end / this.page_size);
-					ui.reset(this);
-				}
+				var page = (this.page > 0) ? (this.page - 1) : (this.pages - 1);
+
+				this.do_handle(page);
 			},
-			get_start_page : function () {
-				return this.page_index * this.page_size;
+			select : function (page) {
+				this.do_handle(page);
 			},
-			get_end_page : function () {
-				return ((this.page_index + 1) * this.page_size > this.page_end) ? this.page_end : ((this.page_index + 1) * this.page_size);
+			get_page_start : function () {
+				return 0;
+			},
+			get_page_end : function () {
+				return this.data.length;
 			}
+
 		},
 		onIndex : function (XMLHttpRequest, textStatus) {
 			if (XMLHttpRequest.readyState == 4) {
 				var data = JSON.parse(XMLHttpRequest.responseText).data;
 				if (isObject(data) && (data.pages >= 1)) {
-					var homepage = mod.homepage;
+					/* var homepage = mod.homepage;
 					homepage.ready = true;
 					homepage.data = data.index;
 					homepage.page_start = homepage.page_index = 0;
 					homepage.page_end = data.index.length;
+					ui.reset(homepage); */
+
+					var homepage = mod.homepage;
+					homepage.ready = true;
+					homepage.act = 'index';
+					homepage.data = data.index;
+					homepage.pages = data.pages;
+					homepage.page = data.page;
+					homepage.page_size = data.page_size;
 					ui.reset(homepage);
+
 				} else {
 					alert('Invalid homepage!');
 				}
@@ -181,13 +189,12 @@ $(function () {
 				alert(JSON.stringify(XMLHttpRequest));
 			}
 		},
-		search : function () {
+		search : function (page) {
 			if (this.ready) {
-				
-			/* 	alert( $('#search_bar input').val()); */
 				var url = this.config.addr;
 				var data = {
 					act : 'search',
+					page : page,
 					keyword : $('#search_bar input').val()
 				}
 				$.ajax({
@@ -206,10 +213,11 @@ $(function () {
 				if (isObject(data) && (data.pages >= 1)) {
 					var homepage = mod.homepage;
 					homepage.ready = true;
+					homepage.act = 'search';
 					homepage.data = data.search;
-					homepage.page_start = homepage.page_index = 0;
-					homepage.page_end = homepage.data.length;
-					
+					homepage.pages = data.pages;
+					homepage.page = data.page;
+					homepage.page_size = data.page_size;
 					ui.reset(homepage);
 				} else {
 					alert(XMLHttpRequest.responseText);
@@ -233,24 +241,15 @@ $(function () {
 			mod.load();
 		},
 		index : function () {
-			mod.index();
+			mod.index(0);
 		},
 		search : function () {
-			mod.search();
+			mod.search(0);
 		},
 	};
 	ui.init('content', 'res', 'res', {}, handlers);
 	mod.init();
-	
-	$('#search_bar form').submit(function ()
-	{
-	  return false;
-	}
-	);
-	
-
-	/* for(var i in $('#search_bar input')[0])
-	{
-		console.log(i,':',+$('#search_bar input')[0][i]);
-	}; */
+	$('#search_bar form').submit(function () {
+		return false;
+	});
 })

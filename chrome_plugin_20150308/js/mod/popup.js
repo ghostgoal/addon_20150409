@@ -22,7 +22,7 @@ $(function () {
 			}
 		},
 		create_funcs : [function (id, data) {
-				var a = $('<div></div>').attr('id', id).css('padding', '10px');//.css('border','1px red solid');
+				var a = $('<div></div>').attr('id', id).css('padding', '10px');
 				var b1 = $('<div></div>').addClass('btn-group');
 				if (this.handlers) {
 					for (var i in this.handlers) {
@@ -34,12 +34,10 @@ $(function () {
 					}
 				}
 				b1.appendTo(a);
-			/* 	b1.after('<hr>'); */
 				var b2 = $('<div></div>');
 				var c = $('<ul></ul>').addClass('pagination');
 				c.appendTo(b2);
 				b2.appendTo(a);
-				/* b2.after('<hr>'); */
 				var b3 = $('<div></div>').addClass("tab-content");
 				b3.appendTo(a);
 				var name = 'res';
@@ -60,8 +58,10 @@ $(function () {
 				return a;
 			}, function (id, data) {
 				var a = $('<div></div>').attr('id', id).css('border', '1px  solid').css('border-radius', '4px').css('padding', '10px').css('borderTopWidth', '20px').css('position', 'relative').addClass("tab-pane fade");
-				
-				UI_RESOURCE_MGR.INIT_MENU(a,{uid:id,on:true});
+				UI_RESOURCE_MGR.INIT_MENU(a, {
+					uid : id,
+					on : true
+				});
 				var max = data['max'] || 0;
 				var len = data['len'] || 0;
 				var sum = data['sum'] || 0;
@@ -75,10 +75,10 @@ $(function () {
 					for (var i = 0; i < data[name].length; i++) {
 						UI_RESOURCE_MGR.INIT_UI(id, b2, this.nextID(), name, data[name][i], ui.create_funcs[2]);
 					}
-				}
+				};
 				return a;
 			}, function (id, data) {
-				var a = $('<div></div>').attr('id', id).css('marginBottom', '10px');
+				var a = $('<div></div>').attr('id', id).css('marginBottom', '10px').css('border', '1px  solid').css('border-radius', '4px').css('position','relative').css('padding','10px 34px 10px 10px');//.addClass('clearfix');
 				var name = data['name'] || 0;
 				var download = data['download'] || 0;
 				var size = data['size'] || 0;
@@ -87,6 +87,16 @@ $(function () {
 					b.css('color', 'gray');
 				}
 				b.appendTo(a);
+				
+				//rpc download
+				var b3 = $('<div></div>').css('position','absolute').css('right','10px').css('top','10px');
+				c3 = $('<a></a>').attr('uuid', id).click(function () {
+						var uuid = $(this).attr('uuid');
+						var ui = UI_RESOURCE_MGR.UI[uuid];
+						alert(ui.load().download);
+					}).html(' <span class="glyphicon glyphicon-download-alt"></span>').css('cursor','pointer');
+				c3.appendTo(b3);
+				b3.appendTo(a);
 				return a;
 			}, function (id, data) {
 				var tid = data.target;
@@ -113,7 +123,6 @@ $(function () {
 			this.fire('load', '', this.on_load_res);
 		},
 		on_load_res : function (res) {
-			/* alert(res); */
 			var data = {
 				tag : 'res',
 				res : res['data']
@@ -135,7 +144,6 @@ $(function () {
 		},
 		load : function () {
 			mod.load_res();
-			
 		},
 		download : function () {
 			alert('download');
