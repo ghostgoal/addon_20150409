@@ -17,7 +17,7 @@ $(function () {
 			UI_RESOURCE_MGR.UI[this.id].reset(data);
 		},
 		create : function (id, data) {
-			var a = $('<div></div>').attr('id', id);
+			var a = $('<div></div>').attr('id', id);//.css('border', '1px black solid');
 			var b1 = $('<div></div>').addClass('btn-group');
 			if (this.handlers) {
 				for (var i in this.handlers) {
@@ -33,7 +33,7 @@ $(function () {
 			if (homepage.ready) {
 				//
 				
-				var player_area = $('<div></div>').css('border', '1px black solid').css('padding','10px').css('border-radius', '4px').css('position','relative').css('width',"100%").css("backgroundColor",'black');
+				var player_area = $('<div></div>').css('border', '1px black solid').css('padding','10px').css('border-radius', '4px').css('position','relative').css('width',"100%").css("backgroundColor",'black').css('marginTop','54px').css('marginBottom','200px');
 				var player  = $('<video></diveo>').attr("controls","controls").attr("autoplay","autoplay").css("width","80%");
 				player.appendTo(player_area);
 				player_area.appendTo(a);
@@ -88,18 +88,19 @@ $(function () {
 				player_page_area.appendTo(player_area);
 				
 				//搜索栏
-				var player_search_bar_area = $('<div></div>').css('top','-36px').css('right','0px').css('width','80%');
+				var player_search_bar_area = $('<div></div>').css('position','absolute').css('top','-44px').css('right','0px').css('width','20%');
 				
-				var player_search_bar = $('<div></div>').css('position','relative').css('border-radius', '4px').css('height','32px');
+				var player_search_bar = $('<div></div>').css('position','relative');
 				player_search_bar.attr('id','search_bar');
 				
 				//
-				var txt= $('<input></input>').css('min-width','100%').css('height','32px');
+				var txt= $('<input></input>').css('min-width','100%').addClass("form-control");
 				txt.appendTo(player_search_bar);
 				
 				//
-				var btn = $('<button></button>').text('Search').css('position','absolute').css('top','0px').css('right','0px').css('height','32px');
+				var btn = $('<a></a>').css('position','absolute').css('top','0px').css('right','0px').addClass("btn btn-default").html("<span class=\"glyphicon glyphicon-search\"></span>");
 				btn.click(this.handlers['search']);
+				
 				btn.appendTo(player_search_bar);
 				
 				//btn.hover(function(){player_list_area.show();},function(){player_list_area.hide();});
