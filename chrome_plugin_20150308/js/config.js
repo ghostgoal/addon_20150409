@@ -1,9 +1,9 @@
 var RESOURCE_ID = ['settings', 'res'];
 var RESOURCE_DEFAULT = [{
 		server_info : [{
-			username : 'guest',
+			username : 'ly',
 			password : '123456',
-			addr : '192.168.1.128',
+			addr : 'http://10.0.0.128/addon/index.php',
 			download : '/download',
 			upload : '/upload',
 		}],
