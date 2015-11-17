@@ -33,7 +33,7 @@ $(function () {
 			if (homepage.ready) {
 				//
 				
-				var player_area = $('<div></div>').css('border', '1px black solid').css('padding','10px').css('border-radius', '4px').css('position','relative').css('width',"100%").css("backgroundColor",'black').css('marginTop','54px').css('marginBottom','200px');
+				var player_area = $('<div></div>').css('border', '1px black solid').css('padding','10px').css('border-radius', '4px').css('position','relative').css('width',"100%").css('marginTop','54px').css('marginBottom','200px').css("backgroundColor",'black');
 				var player  = $('<video></diveo>').attr("controls","controls").attr("autoplay","autoplay").css("width","80%");
 				player.appendTo(player_area);
 				player_area.appendTo(a);

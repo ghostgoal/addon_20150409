@@ -23,6 +23,9 @@ $(function () {
 		},
 		create_funcs : [function (id, data) {
 				var a = $('<div></div>').attr('id', id).css('padding', '10px');
+				
+				
+				//
 				var b1 = $('<div></div>').addClass('btn-group');
 				if (this.handlers) {
 					for (var i in this.handlers) {
@@ -34,12 +37,19 @@ $(function () {
 					}
 				}
 				b1.appendTo(a);
+				
+				//
+				
+				var b3 = $('<div></div>').addClass("tab-content");
+				b3.appendTo(a);
+				
+				//
 				var b2 = $('<div></div>');
 				var c = $('<ul></ul>').addClass('pagination');
 				c.appendTo(b2);
 				b2.appendTo(a);
-				var b3 = $('<div></div>').addClass("tab-content");
-				b3.appendTo(a);
+				
+				//
 				var name = 'res';
 				if (data[name]) {
 					for (var i in data[name]) {
