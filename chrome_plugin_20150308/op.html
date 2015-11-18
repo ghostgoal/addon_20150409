@@ -153,11 +153,11 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-2">
                     <ul class="nav nav-pills nav-stacked">
-                        <li class="active">
+                        <li>
                             <a href="#test_ui" data-toggle="tab">网站设置</a>
                         </li>
-                        <li>
-                            <a href="#1" data-toggle="tab">视频设置</a>
+                        <li  class="active">
+                            <a href="#tool_area" data-toggle="tab">常用工具</a>
                         </li>
                         <li>
                             <a href="#sites_settings" data-toggle="tab">高级设置</a>
@@ -170,7 +170,7 @@
                 <div class="col-xs-12 col-sm-10">
                     <div class="tab-content">
                         <!-- pane 开始 -->
-                        <div class="tab-pane fade in active" id="test_ui">
+                        <div class="tab-pane fade " id="test_ui">
                            
 						   
 						   test_ui
@@ -188,6 +188,13 @@
                         <div class="tab-pane fade" id="history_area">
                         <!-- bs_layout -->
                         </div>
+						
+						<div class="tab-pane fade in active" id="tool_area">
+                        <!-- bs_layout -->
+						<div>
+						<button id="copyBtn">copy</button>
+						</div>
+                        </div>
                         <!-- pane 结束 -->
                     </div>
                 </div>
@@ -195,6 +202,8 @@
         </div>
         <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
         <script src="/js/lib/jquery.js"></script> 
+		
+		<script src="/js/lib/jquery.zeroclipboard.min.js"></script> 
         <!-- 包括所有已编译的插件 -->
          
         <script src="/js/lib/bootstrap.min.js"></script> 
@@ -204,5 +213,8 @@
 		
 		<script src="/js/ext/player.js"></script></div>
 		<script src="/js/ext/history.js"></script></div>
+		
+	
+		<script src="/js/ext/test.js"></script> 
     </body>
 </html>

@@ -14,7 +14,10 @@ var isArray = function (obj) {
 	return Object.prototype.toString.call(obj) === '[object Object]';
 }, isFunction = function (obj) {
 	return Object.prototype.toString.call(obj) === '[object Function]';
+},isString =function(obj){
+	return Object.prototype.toString.call(obj) === '[object String]';
 };
+
 var DEBUG = {
 	TAG : 'DEBUG',
 	enable : true,

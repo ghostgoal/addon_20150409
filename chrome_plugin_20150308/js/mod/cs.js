@@ -18,18 +18,34 @@ var hack = {
 					var site = sites[i];
 					var index = hack.url.indexOf(site['url']);
 					if (index != -1) {
+						
+						//
+
+						
+						//
+						
+						
 						index = site['url'].length;
 						var keyword = hack.url.substr(index);
+					//	console.log(keyword);
+						
 						var max = site['max'];
 						var sum = $(site['patterns'][0]['selector']).length;
+						
+						//console.log(sum);
 						var len = (sum > max) ? max : sum;
 						var data = [];
 						for (var j = 0; j < len; j++) {
+							
+							//console.log(j);
+							
 							var temp = {};
+							
 							for (var k = 0; k < site['patterns'].length; k++) {
 								var selector = site['patterns'][k]['selector'];
 								var key = site['patterns'][k]['key'];
 								var value = site['patterns'][k]['value'];
+								//console.log(value);
 								value = hack.get_data($(selector)[j], value);
 								temp[key] = value;
 							}
@@ -47,14 +63,15 @@ var hack = {
 				}
 			}
 		} catch (e) {
-			alert(JSON.stringify(e));
+			//alert(JSON.stringify(e));
+			console.log(e);
 		}
 	},
 	on_save : function (data) {
 	/* 	alert(JSON.stringify(data)); */
 	},
 	get_data : function (s, v) {
-		var data;
+		var data = '空';
 		if (s) {
 			var str = v.replace(/\s+/g, '');
 			if (/^attr:(\S+)$/.exec(str)) {
@@ -67,8 +84,11 @@ var hack = {
 				data = $(s).text();
 			}
 		}
-		data = data.replace(/\n/g, '');
-		return data ? data : '空';
+	
+	
+		
+		return	isString(data) ? data.replace(/\n/g, '') : '空';
+	
 	},
 	exec : function () {
 		this.load();

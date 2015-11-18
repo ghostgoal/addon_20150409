@@ -200,6 +200,7 @@ $(function () {
 			},
 			select : function (page) {
 				this.do_handle(page);
+			//	alert(page);
 			},
 			get_page_start : function () {
 				return 0;
@@ -238,11 +239,18 @@ $(function () {
 		},
 		search : function (page) {
 			if (this.ready) {
+				
+				
+				
+				
+				
+			
+			//	alert(mod.homepage.keyword);
 				var url = this.config.addr;
 				var data = {
 					act : 'search',
 					page : page,
-					keyword : $('#search_bar input').val()
+					keyword :mod.homepage.keyword
 				}
 				$.ajax({
 					type : 'POST',
@@ -291,6 +299,12 @@ $(function () {
 			mod.index(0);
 		},
 		search : function () {
+			
+			
+			var keyword = $('#search_bar input').val();
+			
+				mod.homepage.keyword = keyword ? keyword : mod.homepage.keyword;
+			
 			mod.search(0);
 		},
 	};

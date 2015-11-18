@@ -84,7 +84,37 @@ $(function () {
 			}
 		},
 		oncreate : function () {
-			alert(JSON.stringify(mod));
+			chrome.browserAction.onClicked.addListener(function (tab) {
+
+				var url = tab.url;
+				var sites = system.settings.cur.sites;
+
+				/* alert(JSON.stringify(system.settings.cur.sites)); */
+
+				for (var i = 0; i < sites.length; i++) {
+					var site = sites[i];
+					var index = url.indexOf(site['url']);
+
+					if (index != -1) {
+
+						index = site['url'].length;
+						var keyword = url.substr(index);
+
+						chrome.tabs.sendMessage(tab.id, {
+							rule:site,
+							keyword : keyword
+						}, function (response) {
+
+							alert(response);
+						});
+
+					}
+
+				};
+
+			});
+
+			console.log(JSON.stringify(mod));
 		}
 	}
 	mod.init();

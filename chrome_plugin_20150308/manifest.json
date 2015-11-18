@@ -1,33 +1,36 @@
 {
- "name": "番号搜索器", 
-   "version": "3.0", 
-   "manifest_version":2,
-   "description": "美女你懂得", 
-   "browser_action": { 
-      "default_icon": "/res/logo.png", 
-      "default_popup": "popup.html" 
-   },
-     "chrome_url_overrides": {
-    "newtab": "blank.html"
-  }
-  ,
-	"background": { "scripts": ["/js/lib/jquery-1.11.0.min.js","/js/core/common.js","/js/config.js","/js/core/main.js"] },
-	"permissions": ["contextMenus","tabs","http://localhost/*"],
-	"icons": {"16": "/res/context.png"},
-   "options_page": "op.html",
-    "omnibox": { "keyword" : "av" },
-	
-	"content_scripts": [
-	{
-      "matches": ["http://*/*"],
-      "js": ["/js/lib/jquery-1.11.0.min.js","/js/core/common.js","/js/config.js","/js/mod/cs.js"]
-    }
+	"name" : "番号搜索器",
+	"version" : "3.0",
+	"manifest_version" : 2,
+	"description" : "美女你懂得",
+	"browser_action" : {
+		"default_icon" : "/res/logo.png"
+
+	},
+	"chrome_url_overrides" : {
+		"newtab" : "blank.html"
+	},
+	"background" : {
+		"scripts" : ["/js/lib/jquery-1.11.0.min.js", "/js/core/common.js", "/js/config.js", "/js/core/main.js"]
+	},
+	"permissions" : ["contextMenus", "tabs", "http://localhost/*", "http://*/*"],
+	"icons" : {
+		"16" : "/res/context.png"
+	},
+	"options_page" : "op.html",
+	"omnibox" : {
+		"keyword" : "av"
+	},
+
+	"content_scripts" : [{
+			"matches" : ["http://*/*"],
+			"js" : ["/js/lib/jquery-1.11.0.min.js", "/js/lib/jquery.zclip.min.js", "/js/core/common.js", "/js/config.js", "/js/mod/cs.js", "/js/ext/hacker.js"]
+		}
 	],
-	  "chrome_url_overrides" : {
-    "history": "bg.html"
-  }
- 
-	
-	
-	
-   }
+	"chrome_url_overrides" : {
+		"history" : "bg.html"
+	},
+
+	"web_accessible_resources" : ["res/ZeroClipboard.swf"]
+
+}

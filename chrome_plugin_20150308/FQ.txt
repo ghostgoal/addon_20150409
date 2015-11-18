@@ -1,0 +1,2 @@
+Q1:content scripts 之间无法通信
+Q2:所以扩展文件必须是UTF8格式

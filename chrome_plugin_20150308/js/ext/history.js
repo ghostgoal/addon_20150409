@@ -23,9 +23,6 @@ $(function () {
 		},
 		create_funcs : [function (id, data) {
 				var a = $('<div></div>').attr('id', id).css('padding', '10px');
-				
-				
-				//
 				var b1 = $('<div></div>').addClass('btn-group');
 				if (this.handlers) {
 					for (var i in this.handlers) {
@@ -37,23 +34,20 @@ $(function () {
 					}
 				}
 				b1.appendTo(a);
-				
-				//
-				
-				var b3 = $('<div></div>').addClass("tab-content");
-				b3.appendTo(a);
-				
-				//
 				var b2 = $('<div></div>');
 				var c = $('<ul></ul>').addClass('pagination');
 				c.appendTo(b2);
 				b2.appendTo(a);
-				
-				//
+				var b3 = $('<div></div>').addClass("tab-content");
+				b3.appendTo(a);
 				var name = 'res';
 				if (data[name]) {
 					for (var i in data[name]) {
 						var tid = this.nextID();
+						
+						if(data[name][i]['len'] == 0 )continue;
+						
+						
 						UI_RESOURCE_MGR.INIT_UI(id, b3, tid, name, data[name][i], ui.create_funcs[1]);
 						var tab_name = 'fake_' + name;
 						var tab_data = {
@@ -65,6 +59,20 @@ $(function () {
 						UI_RESOURCE_MGR.INIT_UI(id, c, 0, tab_name, tab_data, ui.create_funcs[3]);
 					}
 				}
+				
+				
+				//
+				var magnet_list_area = $('<div></div>');
+				
+				var magnet_list_content = $('<textarea></textarea>').css('width','100%').attr('id','magnet_list_content').attr('rows','10');
+				
+				magnet_list_content.appendTo(magnet_list_area);
+				
+				
+				magnet_list_area.appendTo(a);
+				
+				
+				
 				return a;
 			}, function (id, data) {
 				var a = $('<div></div>').attr('id', id).css('border', '1px  solid').css('border-radius', '4px').css('padding', '10px').css('borderTopWidth', '20px').css('position', 'relative').addClass("tab-pane fade");
@@ -83,12 +91,13 @@ $(function () {
 				var name = 'data';
 				if (data[name]) {
 					for (var i = 0; i < data[name].length; i++) {
+
 						UI_RESOURCE_MGR.INIT_UI(id, b2, this.nextID(), name, data[name][i], ui.create_funcs[2]);
 					}
 				};
 				return a;
 			}, function (id, data) {
-				var a = $('<div></div>').attr('id', id).css('marginBottom', '10px').css('border', '1px  solid').css('border-radius', '4px').css('position','relative').css('padding','10px 34px 10px 10px');//.addClass('clearfix');
+				var a = $('<div></div>').attr('id', id).css('marginBottom', '10px').css('border', '1px  solid').css('border-radius', '4px').css('position', 'relative').css('padding', '10px 34px 10px 10px');
 				var name = data['name'] || 0;
 				var download = data['download'] || 0;
 				var size = data['size'] || 0;
@@ -97,14 +106,23 @@ $(function () {
 					b.css('color', 'gray');
 				}
 				b.appendTo(a);
-				
-				//rpc download
-				var b3 = $('<div></div>').css('position','absolute').css('right','10px').css('top','10px');
+				var b3 = $('<div></div>').css('position', 'absolute').css('right', '10px').css('top', '10px');
 				c3 = $('<a></a>').attr('uuid', id).click(function () {
 						var uuid = $(this).attr('uuid');
 						var ui = UI_RESOURCE_MGR.UI[uuid];
-						alert(ui.load().download);
-					}).html(' <span class="glyphicon glyphicon-download-alt"></span>').css('cursor','pointer');
+						var magnet = ui.load().download;
+						alert(magnet);
+						
+						
+						
+						var magnet_list = $('#magnet_list_content');
+							
+						var content = magnet_list.text() || '';
+						
+						magnet_list.text(content+magnet+'\r\n');
+						
+
+					}).html(' <span class="glyphicon glyphicon-download-alt"></span>').css('cursor', 'pointer');
 				c3.appendTo(b3);
 				b3.appendTo(a);
 				return a;
@@ -127,7 +145,6 @@ $(function () {
 			var t = MODULE_MAPS[2];
 			MODULE.INIT(this, t.id, t.name, t.desc, t.events);
 			ui.init('history_area', 'history_res', 'res', {}, handlers);
-			this.load_res();
 		},
 		load_res : function () {
 			this.fire('load', '', this.on_load_res);
