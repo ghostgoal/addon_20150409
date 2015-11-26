@@ -76,6 +76,17 @@
 		return data;
 	}
 
+	var get_pattern_data = function (pattern) {
+		var len = $(pattern['selector']).length;
+		var value = pattern['value'];
+		var selector = pattern['selector'];
+		var data = [];
+		for (var i = 0; i < len; i++) {
+			data[i] = get_data($(selector)[i], value);
+		}
+		return data;
+	}
+
 	var array2str = function (list) {
 		var str = '';
 		for (var i in list) {
@@ -90,14 +101,26 @@
 
 	chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
 
-		var magnet_list = get_magnet_list(request.rule);
-		iframe.show();
-		var magnet_str = array2str(magnet_list);
-		
-		magnet_str = magnet_str || "No Magnet Resource!";
-		iframe.attr('src', 'http://10.0.0.128/zclip/index.php?keyword=' + request.keyword + '&magnet=' + encodeURI(magnet_str));
+		//alert('ok');
+		var act = request.act || '';
 
-		sendResponse(magnet_str);
+		//alert(act);
+		switch (act) {
+		case 'GET_RELATED_PAGES':
+
+			sendResponse({relatedPages:get_pattern_data(request.pattern)});
+			break;
+
+		default:
+			var magnet_list = get_magnet_list(request.rule);
+			iframe.show();
+			var magnet_str = array2str(magnet_list);
+
+			magnet_str = magnet_str || "No Magnet Resource!";
+			iframe.attr('src', 'http://10.0.0.128/zclip/index.php?keyword=' + request.keyword + '&magnet=' + encodeURI(magnet_str));
+
+			sendResponse(magnet_str);
+		}
 	});
 
 });

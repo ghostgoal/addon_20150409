@@ -1,12 +1,13 @@
-var RESOURCE_ID = ['settings', 'res'];
+var RESOURCE_ID = ['settings', 'res', 'magnet'];
 var RESOURCE_DEFAULT = [{
 		server_info : [{
-			username : 'ly',
-			password : '123456',
-			addr : 'http://10.0.0.128/addon/index.php',
-			download : '/download',
-			upload : '/upload',
-		}],
+				username : 'ly',
+				password : '123456',
+				addr : 'http://10.0.0.128/addon/index.php',
+				download : '/download',
+				upload : '/upload',
+			}
+		],
 		sites : [{
 				max : 3,
 				url : 'http://sukebei.nyaa.se/?page=search&cats=0_0&filter=0&term=',
@@ -21,7 +22,7 @@ var RESOURCE_DEFAULT = [{
 					}, {
 						selector : '.tlistrow .tlistsize',
 						key : 'size',
-						value:'text'
+						value : 'text'
 					}
 				],
 				desc : '',
@@ -32,23 +33,25 @@ var RESOURCE_DEFAULT = [{
 				patterns : [{
 						selector : '.i_info',
 						key : 'name',
-						value:'text'
-						
+						value : 'text'
+
 					}, {
 						selector : '.j_size a',
 						key : 'download',
-						value:'attr:href'
+						value : 'attr:href'
 					}, {
 						selector : '.j_size',
 						key : 'size',
-						value:'text'
+						value : 'text'
 					}
 				],
 				desc : '',
 				enable : true
 			}
 		]
-	}, {data:[]}
+	}, {
+		data : []
+	}, {}
 
 ];
 var EVENTMAPS = [{
@@ -75,21 +78,19 @@ var MODULE_MAPS = [{
 		events : ['save', 'load', 'reset'],
 		desc : '选项页',
 		enable : true
-	},{
+	}, {
 		name : 'content script',
 		id : 'cs',
 		events : ['save', 'load', 'reset'],
 		desc : '内容脚本',
 		enable : true
-	},
-	{
+	}, {
 		name : 'popup page',
 		id : 'pp',
 		events : ['save', 'load', 'download'],
 		desc : '弹出页',
 		enable : true
-	},
-	{
+	}, {
 		name : 'server interaction',
 		id : 'si',
 		events : ['load'],

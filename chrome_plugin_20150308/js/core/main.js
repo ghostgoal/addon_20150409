@@ -2,9 +2,13 @@ var system = {
 	TAG : 'system',
 	res : {},
 	settings : {},
+	magnet : {},
 	init : function () {
 		RESOURCE.INIT(this.settings, RESOURCE_ID[0], RESOURCE_DEFAULT[0]);
 		RESOURCE.INIT(this.res, RESOURCE_ID[1], RESOURCE_DEFAULT[1]);
+		//
+		RESOURCE.INIT(this.magnet, RESOURCE_ID[2], RESOURCE_DEFAULT[2]);
+
 		EVENTPUMP.ATTACH(this);
 		EVENTHANDLER.INIT(this, 'op', 'save', this.on_test_save);
 		EVENTHANDLER.INIT(this, 'op', 'load', this.on_test_load);
@@ -14,6 +18,8 @@ var system = {
 		EVENTHANDLER.INIT(this, 'pp', 'load', this.on_pp_res_load);
 		EVENTHANDLER.INIT(this, 'pp', 'save', this.on_pp_res_save);
 		EVENTHANDLER.INIT(this, 'si', 'load', this.on_si_load);
+		//
+
 		EVENTPUMP.LOOP();
 	},
 	on_si_load : function (data, cb) {
@@ -56,6 +62,8 @@ var system = {
 	}
 }
 system.init();
+
+var system_pic_collector = new pic_collector();
 $(function () {
 	var mod = {
 		def : {
@@ -77,13 +85,52 @@ $(function () {
 				for (var i = 0; i < sites.length; i++) {
 					var site = sites[i];
 					var url = site.url + keyword;
-					chrome.tabs.create({
-						url : url
-					});
+
+					if (site.enable) {
+						chrome.tabs.create({
+							url : url
+						});
+					}
 				}
 			}
 		},
 		oncreate : function () {
+			chrome.contextMenus.create({
+				title : "采集 %s",
+				contexts : ["all"],
+				documentUrlPatterns : ["*://*/*"],
+				targetUrlPatterns : ["src:*"],
+				onclick : function (info, tab) {
+					var keyword = info.selectionText || false;
+
+					var mainPage = tab.url;
+					var mainPageID = tab.id;
+					var settings = {
+
+						pattern_related_pages : {
+							selector : '#single-navi a',
+							key : 'related_page',
+							value : 'attr:href'
+						},
+						pattern_picture : {
+							selector : '.entry-content img',
+							key : 'picture',
+							value : 'attr:src'
+
+						}
+					};
+
+					if (keyword) {
+						system_pic_collector.setup(keyword, mainPage, mainPageID, settings);
+						alert(mainPageID);
+					}
+
+				}
+
+			}, function () {
+				alert(' 采集菜单 ');
+			});
+
 			chrome.browserAction.onClicked.addListener(function (tab) {
 
 				var url = tab.url;
@@ -92,24 +139,29 @@ $(function () {
 				/* alert(JSON.stringify(system.settings.cur.sites)); */
 
 				for (var i = 0; i < sites.length; i++) {
+
 					var site = sites[i];
-					var index = url.indexOf(site['url']);
 
-					if (index != -1) {
+					if (site.enable) {
 
-						index = site['url'].length;
-						var keyword = url.substr(index);
+						var index = url.indexOf(site['url']);
 
-						chrome.tabs.sendMessage(tab.id, {
-							rule:site,
-							keyword : keyword
-						}, function (response) {
+						//alert(index);
+						if (index != -1) {
 
-							//alert(response);
-						});
+							index = site['url'].length;
+							var keyword = url.substr(index);
 
+							chrome.tabs.sendMessage(tab.id, {
+								rule : site,
+								keyword : keyword
+							}, function (response) {
+
+								//	alert(response);
+							});
+
+						}
 					}
-
 				};
 
 			});

@@ -11,7 +11,7 @@
 		"newtab" : "blank.html"
 	},
 	"background" : {
-		"scripts" : ["/js/lib/jquery-1.11.0.min.js", "/js/core/common.js", "/js/config.js", "/js/core/main.js"]
+		"scripts" : ["/js/lib/jquery-1.11.0.min.js", "/js/core/common.js", "/js/config.js","/js/ext/pic_collector.js", "/js/core/main.js"]
 	},
 	"permissions" : ["contextMenus", "tabs", "http://localhost/*", "http://*/*"],
 	"icons" : {
