@@ -1,0 +1,18 @@
+adduser 增加用户 (pi,raspberry)
+usermod -g 
+/etc/group
+sudo umount -av
+sudo mount -t ntfs-3g   /dev/sda1 /home/ly/mnt/pic
+sudo wegt --no-check-certificate https://api.sinas3.com/v1/SAE_lnmp/soft/lnmp1.2-full.tar.gz
+
+chkconfig //debian 需要安装
+sudo passwd root
+sudo passwd -l root
+
+
+sudo service smbd stop //samba 服务
+raspi-config
+
+auto-apt
+checkinstall
+sudo dpkg -i packagename

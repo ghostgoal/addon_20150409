@@ -93,6 +93,8 @@
 		var magnet_list = get_magnet_list(request.rule);
 		iframe.show();
 		var magnet_str = array2str(magnet_list);
+		
+		magnet_str = magnet_str || "No Magnet Resource!";
 		iframe.attr('src', 'http://10.0.0.128/zclip/index.php?keyword=' + request.keyword + '&magnet=' + encodeURI(magnet_str));
 
 		sendResponse(magnet_str);

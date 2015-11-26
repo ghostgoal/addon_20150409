@@ -1,0 +1,12 @@
+{
+	"login" : {
+		"gid" : 0,
+		"params" : ["username", "password"],
+		"handler" : "login"
+	},
+	"download" : {
+		"gid" : 0,
+		"params" : ["username", "password"],
+		"handler" : "login"
+	}
+}

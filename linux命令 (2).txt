@@ -2,7 +2,7 @@
 sudo mount -t ntfs-3g   /dev/sda1 /home/video
 sudo mount -t ntfs-3g   /dev/sda5 /home/cg
 sudo mount -t ntfs-3g   /dev/sdb1 /home/share
-
+//deb http://mirrors.ustc.edu.cn/raspbian/raspbian/   wheezy main contrib non-free rpi 树莓派国内源
 
 
 sudo mount -t ntfs-3g -o umask=000,fmask=000 /dev/sda5 /home/soft

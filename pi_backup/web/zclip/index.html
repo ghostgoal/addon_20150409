@@ -1,0 +1,13 @@
+<script src="jquery.js"></script>
+<script src="dist/jquery.zeroclipboard.min.js"></script>
+<script>
+  jQuery(document).ready(function($) {
+    $("body")
+      .on("copy", ".zclip", function(/* ClipboardEvent */ e) {
+        e.clipboardData.clearData();
+        e.clipboardData.setData("text/plain", $(this).data("zclip-text"));
+        e.preventDefault();
+      });
+  });
+</script>
+<button class="zclip" data-zclip-text="Testing 1-2-3!">Click to copy!</button>

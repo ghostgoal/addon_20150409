@@ -1,6 +1,7 @@
 ﻿cat /proc/partitions
 sudo mount -t ntfs-3g   /dev/sdb1 /home/video
-sudo mount -t ntfs-3g   /dev/sdb5 /home/cg
+sudo mount -t ntfs-3g   /dev/sda5 /home/cg
+sudo mount -t ntfs-3g    /dev/sda1 /home/share
 sudo mount -t ntfs-3g -o umask=000,fmask=000 /dev/sda5 /home/soft
 sudo mount -t cifs -o username=ly,password=xxl442 //192.168.1.100/pishare  /home/share
 sudo mount -t cifs -o username=ly,password=xxl442 //192.168.1.100/ydyp  /home/share
